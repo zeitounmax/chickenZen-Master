@@ -3,19 +3,66 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --chinese-red: #DE2910;
+  --chinese-gold: #FFD700;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Motif chinois */
+.chinese-pattern {
+  background-color: #ffffff;
+  background-image: 
+    radial-gradient(#DE2910 9%, transparent 9%),
+    radial-gradient(#DE2910 9%, transparent 9%);
+  background-position: 0 0, 8px 8px;
+  background-size: 16px 16px;
+  opacity: 0.1;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Animation kawaii pour les boutons */
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.hover-bounce:hover {
+  animation: bounce-gentle 0.5s ease infinite;
+}
+
+/* Bordure décorative chinoise */
+.chinese-border {
+  position: relative;
+}
+
+.chinese-border::before,
+.chinese-border::after {
+  content: '❀';
+  position: absolute;
+  color: var(--chinese-red);
+  font-size: 1.2em;
+}
+
+.chinese-border::before {
+  left: -1.5em;
+}
+
+.chinese-border::after {
+  right: -1.5em;
+}
+
+/* Styles pour les scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--chinese-red);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b71c1c;
 }

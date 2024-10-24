@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Chicken {
+  id          String       @id @default(cuid())
+  name        String
+  breed       String?
+  birthDate   DateTime
+  imageUrl    String?
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  eggs        Egg[]
+  healthLogs  HealthLog[]
+}
+
+model Egg {
+  id         String   @id @default(cuid())
+  layDate    DateTime @default(now())
+  weight     Float
+  notes      String?
+  chickenId  String
+  chicken    Chicken  @relation(fields: [chickenId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model HealthLog {
+  id        String   @id @default(cuid())
+  date      DateTime @default(now())
+  weight    Float
+  notes     String?
+  status    String   // 'healthy', 'sick', 'recovering'
+  chickenId String
+  chicken   Chicken  @relation(fields: [chickenId], references: [id])
+  createdAt DateTime @default(now())
+}
