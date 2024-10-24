@@ -74,7 +74,7 @@ export default function Navbar() {
                 scrolled ? 'text-chinese-red' : 'text-chinese-gold'
               }`} />
               <div className='flex items-center'>
-                <span className='text-2xl font-bold' style={{ fontFamily: '\'Noto Sans SC\', sans-serif' }}>
+                <span className='text-2xl font-bold font-noto-sans-sc'>
                   禅师
                 </span>
                 <div className='flex flex-col ml-2'>
@@ -106,7 +106,7 @@ export default function Navbar() {
                 >
                   <div className='flex items-center'>
                     <Icon className='h-5 w-5 mr-2' />
-                    <span style={{ fontFamily: '\'Noto Sans SC\', sans-serif' }}>{label}</span>
+                    <span className='font-noto-sans-sc'>{label}</span>
                   </div>
                   <span className='text-xs mt-0.5 opacity-75'>{en}</span>
                 </Link>
@@ -201,7 +201,7 @@ export default function Navbar() {
                 >
                   <Icon className='h-5 w-5 mr-3' />
                   <div className='flex flex-col'>
-                    <span style={{ fontFamily: '\'Noto Sans SC\', sans-serif' }}>{label}</span>
+                    <span className='font-noto-sans-sc'>{label}</span>
                     <span className='text-xs opacity-75'>{en}</span>
                   </div>
                 </Link>
