@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 export default function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -9,7 +8,6 @@ export default function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClos
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,9 +30,11 @@ export default function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClos
 
       window.location.href = '/dashboard';
       onClose();
-    } catch (err: any) {
-      setError(err.message);
-      console.error('Erreur d\'authentification:', err);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+        console.error('Erreur d\'authentification:', error);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -107,20 +107,19 @@ export default function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClos
                 Chargement...
               </span>
             ) : (
-              isLogin ? 'Se connecter' : "S'inscrire"
+              isLogin ? 'Se connecter' : 'S\'inscrire'
             )}
           </button>
         </form>
 
-        
         <p className="mt-4 text-center text-sm text-gray-600">
-          {isLogin ? "Pas encore de compte ?" : "Déjà un compte ?"}
+          {isLogin ? 'Pas encore de compte ?' : 'Déjà un compte ?'}
           <button
             onClick={() => setIsLogin(!isLogin)}
             className="ml-1 text-chinese-red hover:text-red-700 font-medium"
             disabled={isLoading}
           >
-            {isLogin ? "S'inscrire" : "Se connecter"}
+            {isLogin ? 'S\'inscrire' : 'Se connecter'}
           </button>
         </p>
       </div>

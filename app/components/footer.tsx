@@ -1,6 +1,6 @@
 'use client';
 
-import { FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { HiHome, HiUsers, HiChartBar } from 'react-icons/hi';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -84,7 +84,7 @@ export default function Footer() {
             <div className="border-l-2 border-chinese-red/20 pl-4 transition-all duration-300 hover:border-chinese-red/40 hover:pl-6">
               <blockquote>
                 <p className="text-sm text-gray-600 italic">
-                  "La patience est la clé de l'harmonie avec vos poules"
+                  &ldquo;La patience est la clé de l&apos;harmonie avec vos poules&rdquo;
                 </p>
                 <footer className="text-sm text-gray-500 mt-1">
                   <cite>- 鸡禅师 (Maître Zen des Poules)</cite>

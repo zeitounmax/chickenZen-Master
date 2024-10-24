@@ -63,22 +63,22 @@ export default function Navbar() {
             scrolled ? 'opacity-0' : 'opacity-10'
           }`}
         />
-        <div className="container mx-auto px-4 relative">
-          <div className="flex justify-between items-center h-16">
+        <div className='container mx-auto px-4 relative'>
+          <div className='flex justify-between items-center h-16'>
             
             <Link 
-              href="/"
-              className="flex items-center space-x-2 hover-bounce group"
+              href='/'
+              className='flex items-center space-x-2 hover-bounce group'
             >
               <GiChicken className={`h-8 w-8 transform group-hover:rotate-12 transition-transform duration-300 ${
                 scrolled ? 'text-chinese-red' : 'text-chinese-gold'
               }`} />
-              <div className="flex items-center">
-                <span className="text-2xl font-bold" style={{ fontFamily: "'Noto Sans SC', sans-serif" }}>
+              <div className='flex items-center'>
+                <span className='text-2xl font-bold' style={{ fontFamily: '\'Noto Sans SC\', sans-serif' }}>
                   禅师
                 </span>
-                <div className="flex flex-col ml-2">
-                  <span className="text-lg font-bold">ChickZen</span>
+                <div className='flex flex-col ml-2'>
+                  <span className='text-lg font-bold'>ChickZen</span>
                   <span className={`text-xs ${scrolled ? 'text-gray-600' : 'text-white/75'}`}>
                     混合鸡禅师
                   </span>
@@ -87,7 +87,7 @@ export default function Navbar() {
             </Link>
 
             {/* Navigation desktop */}
-            <div className="hidden md:flex items-center space-x-1">
+            <div className='hidden md:flex items-center space-x-1'>
               {filteredNavItems.map(({ path, label, en, icon: Icon }) => (
                 <Link
                   key={path}
@@ -104,11 +104,11 @@ export default function Navbar() {
                     }
                   `}
                 >
-                  <div className="flex items-center">
-                    <Icon className="h-5 w-5 mr-2" />
-                    <span style={{ fontFamily: "'Noto Sans SC', sans-serif" }}>{label}</span>
+                  <div className='flex items-center'>
+                    <Icon className='h-5 w-5 mr-2' />
+                    <span style={{ fontFamily: '\'Noto Sans SC\', sans-serif' }}>{label}</span>
                   </div>
-                  <span className="text-xs mt-0.5 opacity-75">{en}</span>
+                  <span className='text-xs mt-0.5 opacity-75'>{en}</span>
                 </Link>
               ))}
 
@@ -135,7 +135,7 @@ export default function Navbar() {
               )}
             </div>
 
-            <div className="md:hidden flex items-center space-x-2">
+            <div className='md:hidden flex items-center space-x-2'>
               {/* Bouton Connexion/Déconnexion mobile */}
               {isAuthenticated ? (
                 <button
@@ -161,13 +161,13 @@ export default function Navbar() {
 
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-lg hover:bg-white/10 transition-colors duration-300"
-                aria-label="Menu"
+                className='p-2 rounded-lg hover:bg-white/10 transition-colors duration-300'
+                aria-label='Menu'
               >
                 {isOpen ? (
-                  <HiX className="h-6 w-6" />
+                  <HiX className='h-6 w-6' />
                 ) : (
-                  <HiMenu className="h-6 w-6" />
+                  <HiMenu className='h-6 w-6' />
                 )}
               </button>
             </div>
@@ -181,7 +181,7 @@ export default function Navbar() {
               border-t ${scrolled ? 'border-gray-100' : 'border-red-600'}
             `}
           >
-            <div className="container mx-auto px-4 py-2 space-y-1">
+            <div className='container mx-auto px-4 py-2 space-y-1'>
               {filteredNavItems.map(({ path, label, en, icon: Icon }) => (
                 <Link
                   key={path}
@@ -199,10 +199,10 @@ export default function Navbar() {
                     }
                   `}
                 >
-                  <Icon className="h-5 w-5 mr-3" />
-                  <div className="flex flex-col">
-                    <span style={{ fontFamily: "'Noto Sans SC', sans-serif" }}>{label}</span>
-                    <span className="text-xs opacity-75">{en}</span>
+                  <Icon className='h-5 w-5 mr-3' />
+                  <div className='flex flex-col'>
+                    <span style={{ fontFamily: '\'Noto Sans SC\', sans-serif' }}>{label}</span>
+                    <span className='text-xs opacity-75'>{en}</span>
                   </div>
                 </Link>
               ))}

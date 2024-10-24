@@ -19,10 +19,27 @@ export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();
 
+    console.log('Tentative de connexion:', { 
+      providedEmail: email,
+      expectedEmail: defaultEmail,
+      passwordMatch: password === defaultPassword 
+    });
+
     if (!email || !password) {
       return NextResponse.json(
         { message: 'Email et mot de passe requis' },
         { status: 400 }
+      );
+    }
+
+    if (!defaultEmail || !defaultPassword) {
+      console.error('Variables d\'environnement manquantes:', {
+        DEFAULT_USER_EMAIL: defaultEmail,
+        DEFAULT_USER_PASSWORD: !!defaultPassword
+      });
+      return NextResponse.json(
+        { message: 'Erreur de configuration du serveur' },
+        { status: 500 }
       );
     }
 
