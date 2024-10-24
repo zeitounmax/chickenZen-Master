@@ -1,23 +1,19 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/app/lib/prisma';
+import prisma from '@/app/lib/prisma';
 
 export async function GET() {
   try {
     const chickens = await prisma.chicken.findMany({
       include: {
-        _count: {
-          select: { eggs: true }
-        },
         eggs: {
           orderBy: {
             layDate: 'desc'
-          },
-          take: 1,
+          }
         }
       }
     });
     return NextResponse.json(chickens);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Error fetching chickens' },
       { status: 500 }
@@ -37,7 +33,7 @@ export async function POST(request: Request) {
       }
     });
     return NextResponse.json(chicken);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Error creating chicken' },
       { status: 500 }

@@ -25,7 +25,7 @@ export async function GET(
     }
 
     return NextResponse.json(chicken);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Error fetching chicken' },
       { status: 500 }
@@ -49,7 +49,7 @@ export async function PUT(
       }
     });
     return NextResponse.json(chicken);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Error updating chicken' },
       { status: 500 }
@@ -73,8 +73,8 @@ export async function DELETE(
     });
 
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error deleting chicken:', error);
+  } catch (_error) {
+    console.error('Error deleting chicken:', _error);
     return NextResponse.json(
       { error: 'Error deleting chicken' },
       { status: 500 }

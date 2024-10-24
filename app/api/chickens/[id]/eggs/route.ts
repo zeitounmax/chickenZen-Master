@@ -11,7 +11,7 @@ export async function GET(
       orderBy: { layDate: 'desc' }
     });
     return NextResponse.json(eggs);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Error fetching eggs' },
       { status: 500 }
@@ -34,7 +34,7 @@ export async function POST(
       }
     });
     return NextResponse.json(egg);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Error creating egg' },
       { status: 500 }
@@ -60,7 +60,7 @@ export async function PUT(
       }
     });
     return NextResponse.json(egg);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Error updating egg' },
       { status: 500 }
@@ -90,7 +90,7 @@ export async function DELETE(
       }
     });
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Error deleting egg' },
       { status: 500 }

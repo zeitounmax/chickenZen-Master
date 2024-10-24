@@ -12,7 +12,7 @@ export async function GET() {
       }
     });
     return NextResponse.json(eggs);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Error fetching eggs' },
       { status: 500 }

@@ -1,75 +1,51 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
-import { startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
 
-interface Egg {
-  weight: number;
-  layDate: Date;
-}
-
-interface ChickenRanking {
-  chickenId: string;
-  chickenName: string;
-  totalEggs: number;
-  totalWeight: number;
-  averageWeight: number;
-}
-
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(request.url);
-    const period = searchParams.get('period') || 'week';
-    
-    let startDate: Date, endDate: Date;
-    const now = new Date();
-
-    switch (period) {
-      case 'month':
-        startDate = startOfMonth(now);
-        endDate = endOfMonth(now);
-        break;
-      case 'year':
-        startDate = new Date(now.getFullYear(), 0, 1);
-        endDate = new Date(now.getFullYear(), 11, 31);
-        break;
-      default: // week
-        startDate = startOfWeek(now);
-        endDate = endOfWeek(now);
-    }
-
-    const rankings = await prisma.chicken.findMany({
-      select: {
-        id: true,
-        name: true,
-        eggs: {
-          where: {
-            layDate: {
-              gte: startDate,
-              lte: endDate
-            }
-          },
-          select: {
-            weight: true,
-            layDate: true
-          }
-        }
+    const chickens = await prisma.chicken.findMany({
+      include: {
+        eggs: true
       }
     });
 
-    const formattedRankings: ChickenRanking[] = rankings
-      .map(chicken => ({
-        chickenId: chicken.id,
-        chickenName: chicken.name,
-        totalEggs: chicken.eggs.length,
-        totalWeight: chicken.eggs.reduce((sum: number, egg: Egg) => sum + egg.weight, 0),
-        averageWeight: chicken.eggs.length > 0 
-          ? chicken.eggs.reduce((sum: number, egg: Egg) => sum + egg.weight, 0) / chicken.eggs.length 
-          : 0
-      }))
-      .sort((a, b) => b.totalEggs - a.totalEggs);
+    // Calculer les statistiques pour chaque poule
+    const rankings = chickens.map(chicken => {
+      const totalEggs = chicken.eggs.length;
+      const averageWeight = chicken.eggs.reduce((sum, egg) => sum + egg.weight, 0) / totalEggs || 0;
+      
+      // Calculer la fréquence de ponte (œufs par jour)
+      let layingFrequency = 0;
+      if (totalEggs > 0) {
+        const firstEggDate = new Date(Math.min(...chicken.eggs.map(egg => egg.layDate.getTime())));
+        const lastEggDate = new Date(Math.max(...chicken.eggs.map(egg => egg.layDate.getTime())));
+        const daysDiff = (lastEggDate.getTime() - firstEggDate.getTime()) / (1000 * 60 * 60 * 24);
+        layingFrequency = totalEggs / (daysDiff + 1); // +1 pour inclure le premier jour
+      }
 
-    return NextResponse.json(formattedRankings);
-  } catch (error) {
+      // Calculer le score total
+      const weightScore = averageWeight * 10; // Pondération du poids moyen
+      const frequencyScore = layingFrequency * 100; // Pondération de la fréquence
+      const totalScore = weightScore + frequencyScore;
+
+      return {
+        id: chicken.id,
+        name: chicken.name,
+        breed: chicken.breed,
+        stats: {
+          totalEggs,
+          averageWeight: averageWeight.toFixed(2),
+          layingFrequency: layingFrequency.toFixed(3),
+          score: totalScore.toFixed(2)
+        }
+      };
+    });
+
+    // Trier par score
+    rankings.sort((a, b) => parseFloat(b.stats.score) - parseFloat(a.stats.score));
+
+    return NextResponse.json(rankings);
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Error calculating rankings' },
       { status: 500 }
