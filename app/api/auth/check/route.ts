@@ -25,8 +25,8 @@ export async function GET() {
       message: 'Authentifié',
       user: { email: payload.email }
     }, { status: 200 });
-  } catch (error) {
-    console.error('Erreur de vérification du token:', error);
+  } catch (_error) {
+    console.error('Erreur de vérification du token:', _error);
     return NextResponse.json({ message: 'Token invalide' }, { status: 401 });
   }
 }

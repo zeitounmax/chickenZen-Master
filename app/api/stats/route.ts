@@ -32,7 +32,10 @@ export async function GET() {
     chickens.forEach(chicken => {
       if (chicken.eggs.length > maxEggs) {
         maxEggs = chicken.eggs.length;
-        bestLayer = chicken;
+        bestLayer = {
+          name: chicken.name,
+          totalEggs: chicken.eggs.length
+        };
       }
     });
 
@@ -41,10 +44,7 @@ export async function GET() {
       totalEggs,
       averageEggsPerChicken: averageEggsPerChicken.toFixed(2),
       averageEggWeight: averageEggWeight.toFixed(2),
-      bestLayer: bestLayer ? {
-        name: bestLayer.name,
-        totalEggs: maxEggs
-      } : null
+      bestLayer
     };
 
     return NextResponse.json(stats);

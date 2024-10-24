@@ -10,7 +10,7 @@ export async function POST() {
     name: 'authToken',
     value: '',
     expires: new Date(0),
-    path: '/',
+    path: '/'
   });
 
   return response;

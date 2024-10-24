@@ -5,9 +5,8 @@ const secret = new TextEncoder().encode(
   process.env.JWT_SECRET || 'your-secret-key'
 );
 
-
-const defaultEmail = process.env.DEFAULT_USER_EMAIL 
-const defaultPassword = process.env.DEFAULT_USER_PASSWORD 
+const defaultEmail = process.env.DEFAULT_USER_EMAIL;
+const defaultPassword = process.env.DEFAULT_USER_PASSWORD;
 
 const users = [
   {
@@ -56,8 +55,8 @@ export async function POST(request: Request) {
     });
 
     return response;
-  } catch (error) {
-    console.error('Erreur de connexion:', error);
+  } catch (_error) {
+    console.error('Erreur de connexion:', _error);
     return NextResponse.json(
       { message: 'Erreur lors de la connexion' },
       { status: 500 }

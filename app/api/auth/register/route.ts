@@ -5,7 +5,7 @@ const secret = new TextEncoder().encode(
   process.env.JWT_SECRET || 'your-secret-key'
 );
 
-const defaultEmail = process.env.DEFAULT_USER_EMAIL ;
+const defaultEmail = process.env.DEFAULT_USER_EMAIL;
 
 const users = [
   {
@@ -53,10 +53,10 @@ export async function POST(request: Request) {
     });
 
     return response;
-  } catch (error) {
-    console.error('Erreur d\'inscription:', error);
+  } catch (_error) {
+    console.error('Erreur d\'inscription:', _error);
     return NextResponse.json(
-      { message: "Erreur lors de l'inscription" },
+      { message: 'Erreur lors de l\'inscription' },
       { status: 500 }
     );
   }
