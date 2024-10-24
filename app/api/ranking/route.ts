@@ -1,11 +1,21 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    // Récupérer la période depuis les paramètres de requête
+    const searchParams = request.nextUrl.searchParams;
+    const period = searchParams.get('period') || 'week';
+
     const chickens = await prisma.chicken.findMany({
       include: {
-        eggs: true
+        eggs: {
+          where: period === 'week' ? {
+            layDate: {
+              gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+            }
+          } : undefined
+        }
       }
     });
 

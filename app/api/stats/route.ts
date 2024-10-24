@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     // Récupérer toutes les poules avec leurs œufs
     const chickens = await prisma.chicken.findMany({
