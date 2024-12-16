@@ -1,20 +1,11 @@
 import { NextResponse } from 'next/server';
 import { SignJWT } from 'jose';
+import prisma from '@/app/lib/prisma';
+import bcrypt from 'bcryptjs';
 
 const secret = new TextEncoder().encode(
   process.env.JWT_SECRET || 'your-secret-key'
 );
-
-
-const defaultEmail = process.env.DEFAULT_USER_EMAIL 
-const defaultPassword = process.env.DEFAULT_USER_PASSWORD 
-
-const users = [
-  {
-    email: defaultEmail,
-    password: defaultPassword
-  }
-];
 
 export async function POST(request: Request) {
   try {
@@ -27,16 +18,18 @@ export async function POST(request: Request) {
       );
     }
 
-    const user = users.find(u => u.email === email && u.password === password);
+    const user = await prisma.user.findUnique({
+      where: { email }
+    });
 
-    if (!user) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return NextResponse.json(
         { message: 'Email ou mot de passe incorrect' },
         { status: 401 }
       );
     }
 
-    const token = await new SignJWT({ email })
+    const token = await new SignJWT({ userId: user.id, email })
       .setProtectedHeader({ alg: 'HS256' })
       .setExpirationTime('24h')
       .sign(secret);
@@ -52,7 +45,7 @@ export async function POST(request: Request) {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24 // 24 heures
+      maxAge: 60 * 60 * 24
     });
 
     return response;

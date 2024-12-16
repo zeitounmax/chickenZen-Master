@@ -7,7 +7,7 @@ import Footer from './components/footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ChickZen  | 混合鸡禅师',
+  title: 'Chickzenmaster',
   description: 'Gérez votre élevage de poules avec sagesse',
 };
 

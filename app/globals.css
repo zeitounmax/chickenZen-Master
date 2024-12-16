@@ -7,7 +7,6 @@
   --chinese-gold: #FFD700;
 }
 
-/* Motif chinois */
 .chinese-pattern {
   background-color: #ffffff;
   background-image: 
@@ -18,7 +17,7 @@
   opacity: 0.1;
 }
 
-/* Animation kawaii pour les boutons */
+
 @keyframes bounce-gentle {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-3px); }
@@ -28,28 +27,6 @@
   animation: bounce-gentle 0.5s ease infinite;
 }
 
-/* Bordure décorative chinoise */
-.chinese-border {
-  position: relative;
-}
-
-.chinese-border::before,
-.chinese-border::after {
-  content: '❀';
-  position: absolute;
-  color: var(--chinese-red);
-  font-size: 1.2em;
-}
-
-.chinese-border::before {
-  left: -1.5em;
-}
-
-.chinese-border::after {
-  right: -1.5em;
-}
-
-/* Styles pour les scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
 }

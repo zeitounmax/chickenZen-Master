@@ -15,16 +15,23 @@ export default function AddChickenForm() {
     e.preventDefault();
 
     try {
+      console.log('Données envoyées:', formData);
+
       const response = await fetch('/api/chickens', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          birthDate: new Date(formData.birthDate).toISOString(),
+        }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to create chicken');
+        throw new Error(data.error || 'Erreur lors de la création de la poule');
       }
 
       setFormData({
@@ -34,9 +41,11 @@ export default function AddChickenForm() {
         description: ''
       });
       setIsOpen(false);
-      window.location.reload();
-    } catch (error) {
-      console.error('Error creating chicken:', error);
+      
+      window.location.href = '/chickens';
+    } catch (error: any) {
+      console.error('Erreur lors de la création de la poule:', error);
+      alert('Erreur lors de la création: ' + error.message);
     }
   };
 

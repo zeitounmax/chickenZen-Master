@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
+import { getUserFromToken } from '@/app/lib/auth';
 
 export async function GET(
   request: Request,
@@ -24,6 +25,22 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
+    const { userId } = await getUserFromToken();
+    
+    const chicken = await prisma.chicken.findFirst({
+      where: {
+        id: params.id,
+        userId: userId
+      }
+    });
+
+    if (!chicken) {
+      return NextResponse.json(
+        { message: 'Poule non trouvée ou non autorisée' },
+        { status: 404 }
+      );
+    }
+
     const data = await request.json();
     const egg = await prisma.egg.create({
       data: {
@@ -33,10 +50,14 @@ export async function POST(
         notes: data.notes,
       }
     });
-    return NextResponse.json(egg);
+
+    return NextResponse.json({
+      message: 'Œuf ajouté avec succès',
+      egg
+    });
   } catch (error) {
     return NextResponse.json(
-      { error: 'Error creating egg' },
+      { message: 'Erreur lors de la création de l\'œuf' },
       { status: 500 }
     );
   }

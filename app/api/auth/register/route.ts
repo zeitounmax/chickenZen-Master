@@ -1,17 +1,11 @@
 import { NextResponse } from 'next/server';
 import { SignJWT } from 'jose';
+import prisma from '@/app/lib/prisma';
+import bcrypt from 'bcryptjs';
 
 const secret = new TextEncoder().encode(
   process.env.JWT_SECRET || 'your-secret-key'
 );
-
-const defaultEmail = process.env.DEFAULT_USER_EMAIL ;
-
-const users = [
-  {
-    email: defaultEmail,
-  }
-];
 
 export async function POST(request: Request) {
   try {
@@ -24,16 +18,27 @@ export async function POST(request: Request) {
       );
     }
 
-    if (users.some(u => u.email === email)) {
+    const existingUser = await prisma.user.findUnique({
+      where: { email }
+    });
+
+    if (existingUser) {
       return NextResponse.json(
         { message: 'Cet email est déjà utilisé' },
         { status: 400 }
       );
     }
 
-    users.push({ email });
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const token = await new SignJWT({ email })
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+      }
+    });
+
+    const token = await new SignJWT({ userId: user.id, email })
       .setProtectedHeader({ alg: 'HS256' })
       .setExpirationTime('24h')
       .sign(secret);
@@ -49,7 +54,7 @@ export async function POST(request: Request) {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24 // 24 heures
+      maxAge: 60 * 60 * 24
     });
 
     return response;

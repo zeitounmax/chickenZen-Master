@@ -41,10 +41,10 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { path: '/', label: '首页', icon: HiHome, en: 'Accueil' },
-    { path: '/dashboard', label: '仪表板', icon: HiTemplate, en: 'Tableau de bord', auth: true },
-    { path: '/chickens', label: '我的鸡', icon: HiUsers, en: 'Mes Poules', auth: true },
-    { path: '/ranking', label: '排名', icon: HiChartBar, en: 'Classement', auth: true },
+    { path: '/', icon: HiHome, en: 'Accueil' },
+    { path: '/dashboard', icon: HiTemplate, en: 'Tableau de bord', auth: true },
+    { path: '/chickens', icon: HiUsers, en: 'Mes Poules', auth: true },
+    { path: '/ranking', icon: HiChartBar, en: 'Classement', auth: true },
   ];
 
   const filteredNavItems = navItems.filter(item => !item.auth || isAuthenticated);
@@ -74,13 +74,10 @@ export default function Navbar() {
                 scrolled ? 'text-chinese-red' : 'text-chinese-gold'
               }`} />
               <div className="flex items-center">
-                <span className="text-2xl font-bold" style={{ fontFamily: "'Noto Sans SC', sans-serif" }}>
-                  禅师
-                </span>
                 <div className="flex flex-col ml-2">
                   <span className="text-lg font-bold">ChickZen</span>
                   <span className={`text-xs ${scrolled ? 'text-gray-600' : 'text-white/75'}`}>
-                    混合鸡禅师
+                    Master
                   </span>
                 </div>
               </div>
@@ -88,7 +85,7 @@ export default function Navbar() {
 
             {/* Navigation desktop */}
             <div className="hidden md:flex items-center space-x-1">
-              {filteredNavItems.map(({ path, label, en, icon: Icon }) => (
+              {filteredNavItems.map(({ path, en, icon: Icon }) => (
                 <Link
                   key={path}
                   href={path}
@@ -106,9 +103,8 @@ export default function Navbar() {
                 >
                   <div className="flex items-center">
                     <Icon className="h-5 w-5 mr-2" />
-                    <span style={{ fontFamily: "'Noto Sans SC', sans-serif" }}>{label}</span>
+                    <span>{en}</span>
                   </div>
-                  <span className="text-xs mt-0.5 opacity-75">{en}</span>
                 </Link>
               ))}
 
@@ -136,7 +132,6 @@ export default function Navbar() {
             </div>
 
             <div className="md:hidden flex items-center space-x-2">
-              {/* Bouton Connexion/Déconnexion mobile */}
               {isAuthenticated ? (
                 <button
                   onClick={handleLogout}
@@ -182,7 +177,7 @@ export default function Navbar() {
             `}
           >
             <div className="container mx-auto px-4 py-2 space-y-1">
-              {filteredNavItems.map(({ path, label, en, icon: Icon }) => (
+              {filteredNavItems.map(({ path, en, icon: Icon }) => (
                 <Link
                   key={path}
                   href={path}
@@ -201,8 +196,7 @@ export default function Navbar() {
                 >
                   <Icon className="h-5 w-5 mr-3" />
                   <div className="flex flex-col">
-                    <span style={{ fontFamily: "'Noto Sans SC', sans-serif" }}>{label}</span>
-                    <span className="text-xs opacity-75">{en}</span>
+                    <span>{en}</span>
                   </div>
                 </Link>
               ))}

@@ -10,7 +10,7 @@ export default function Footer() {
     <footer className="bg-white border-t border-gray-100">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Logo et description */}
+          
           <div className="space-y-4">
             <div className="flex items-baseline space-x-2 group">
               <h2 className="text-xl font-bold text-chinese-red transition-colors duration-300 group-hover:text-chinese-red/90">
@@ -87,7 +87,7 @@ export default function Footer() {
                   "La patience est la clé de l'harmonie avec vos poules"
                 </p>
                 <footer className="text-sm text-gray-500 mt-1">
-                  <cite>- 鸡禅师 (Maître Zen des Poules)</cite>
+                  <cite>- Maître Zen des Poules</cite>
                 </footer>
               </blockquote>
             </div>

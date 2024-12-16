@@ -45,7 +45,6 @@ export default function AddEggForm({ onClose, chickenId }: AddEggFormProps) {
       <div className="bg-white p-6 rounded-lg w-96 shadow-xl">
         <h2 className="text-xl font-bold mb-4 text-chinese-red">
           Ajouter un œuf
-          <span className="block text-sm font-normal text-chinese-gold">添加鸡蛋</span>
         </h2>
         
         <form onSubmit={handleSubmit} className="space-y-4">

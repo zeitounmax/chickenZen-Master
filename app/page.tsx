@@ -12,7 +12,7 @@ export default function HomePage() {
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold text-chinese-red mb-4">
             ChickZen 
-            <span className="block text-2xl text-amber-600">混合鸡禅师</span>
+      
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Harmonisez votre élevage de poules avec sagesse et précision
@@ -50,7 +50,7 @@ export default function HomePage() {
 
         <div className="mt-16 text-center">
           <p className="text-sm text-gray-600 italic">
-            "La patience est la clé de l'harmonie avec vos poules" - <span className="text-chinese-red">鸡禅师</span>
+            "La patience est la clé de l'harmonie avec vos poules" 
           </p>
         </div>
       </div>

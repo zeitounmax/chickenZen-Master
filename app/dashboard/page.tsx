@@ -85,7 +85,6 @@ export default async function DashboardPage() {
     <div className="space-y-8">
       <h1 className="text-3xl font-bold text-[#DE2910]">
         Tableau de Bord
-        <span className="block text-lg font-normal text-[#FFDE00]">仪表板</span>
       </h1>
 
       <Suspense fallback={<div>Chargement des statistiques...</div>}>
